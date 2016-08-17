@@ -35,10 +35,11 @@ var (
 	titleReplacer = strings.NewReplacer(" ", "-", ",", "-", ".", "-", "。", "-", "，", "-")
 )
 
-func newContent(ctx *cli.Context) {
+func newContent(ctx *cli.Context) error {
 	if len(ctx.Args()) == 0 {
-		log15.Error("need params\nusage:\n pugo new [post|page|site]")
-		return
+		e := "need params\nusage:\n pugo new [post|page|site]"
+		log15.Error(e)
+		return errors.New(e)
 	}
 	var err error
 	switch ctx.Args()[0] {
@@ -49,12 +50,15 @@ func newContent(ctx *cli.Context) {
 	case "page":
 		err = newPage(ctx.Args()[1:], ctx.String("to"))
 	default:
-		log15.Error("unknown params\nusage:\n pugo new [post|page|site]")
-		return
+		e := "unknown params\nusage:\n pugo new [post|page|site]"
+		log15.Error(e)
+		return errors.New(e)
 	}
 	if err != nil {
 		log15.Crit("New|%s|%s", ctx.Args()[0], err.Error())
+		return err
 	}
+	return nil
 }
 
 func newPost(args []string, dstDir string) error {

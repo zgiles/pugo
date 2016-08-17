@@ -23,9 +23,10 @@ var (
 			debugFlag,
 		},
 		Before: Before,
-		Action: func(ctx *cli.Context) {
+		Action: func(ctx *cli.Context) error {
 			// migrate.Init()
 			build(newContext(ctx, true), false)
+			return nil
 		},
 	}
 )

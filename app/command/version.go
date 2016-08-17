@@ -12,12 +12,13 @@ var (
 	Version = cli.Command{
 		Name:  "version",
 		Usage: "print PuGo Version",
-		Action: func(ctx *cli.Context) {
+		Action: func(ctx *cli.Context) error {
 			if vars.Commit == "" {
 				fmt.Printf("%v version %v ~ %s\n", ctx.App.Name, ctx.App.Version, ctx.App.Compiled.Format("2006/01/02 15:04"))
-				return
+				return nil
 			}
 			fmt.Printf("%v version %v ~ %s\n", ctx.App.Name, ctx.App.Version, vars.Commit)
+			return nil
 		},
 	}
 )

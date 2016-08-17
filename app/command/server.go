@@ -28,7 +28,7 @@ var (
 	s *server.Server
 )
 
-func serv(c *cli.Context) {
+func serv(c *cli.Context) error {
 	if c.Bool("static") {
 		ctx := newContext(c, false)
 		builder.Read(ctx)
@@ -41,7 +41,7 @@ func serv(c *cli.Context) {
 		s := server.New(dstDir)
 		s.SetPrefix(ctx.Source.Meta.Path)
 		s.Run(c.String("addr"))
-		return
+		return nil
 	}
 	builder.After(func(ctx *builder.Context) {
 		if s == nil {
@@ -53,4 +53,5 @@ func serv(c *cli.Context) {
 		}
 	})
 	build(newContext(c, true), true)
+	return nil
 }

@@ -1,6 +1,7 @@
 package main
 
 import (
+	"os"
 	"time"
 
 	"github.com/codegangsta/cli"
@@ -26,5 +27,5 @@ func main() {
 		command.Version,
 	}
 	app.HideVersion = true
-	app.RunAndExitOnError()
+	app.Run(os.Args)
 }
